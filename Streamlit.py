@@ -44,12 +44,11 @@ def draw_kegg_map(map_id, outdir):
     img_filename = "%s.pdf" % map_id
     canvas.draw(os.path.join(outdir, img_filename))
 
-
 #import the data
 matplotlib.pyplot.switch_backend('Agg') 
-read_and_cache_csv = st.cache(pd.read_excel)
-countData = read_and_cache_csv(r'/Users/hellpark/Desktop/R_Landing.xlsx',sheet_name='R_Landing')
-scatterData = read_and_cache_csv(r'/Users/hellpark/Desktop/R_Landing.xlsx',sheet_name='Scatter')
+read_and_cache_csv = st.cache(pd.read_csv)
+countData = read_and_cache_csv('https://raw.githubusercontent.com/helloftroy/Omics_TD1.0/main/R_Landing.csv')
+scatterData = read_and_cache_csv('https://raw.githubusercontent.com/helloftroy/Omics_TD1.0/main/Scatter.csv')
 countData = pd.DataFrame(countData)
 st.write("# Halomonas TD1.0 Proteomics")
 pathlist = list(dict.fromkeys(countData.KEGGNamesofPath))
@@ -89,8 +88,8 @@ if choice == 'heatmap':
     kegginput = st.selectbox('Select Pathway KEGG:', pathlist)
     #kegginput = st.text_input("Select Pathway KEGG",max_chars=200)
     truth = []
-    for key in countData.KEGGPATH:
-        if kegginput in key:
+    for key in countData.KEGGPATH.fillna('a'):
+        if kegginput in key and key is not float:
             truth.append(True)
         else:
             truth.append(False)
@@ -139,3 +138,8 @@ elif choice == 'MAP':
         base64_pdf = base64.b64encode(f.read()).decode('utf-8')
         pdf_display = F'<iframe src="data:application/pdf;base64,{base64_pdf}" width="900" height="700" type="application/pdf"></iframe>'
         st.markdown(pdf_display, unsafe_allow_html=True)
+
+
+
+
+
