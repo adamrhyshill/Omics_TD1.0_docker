@@ -69,11 +69,20 @@ if vis_choice == 'NaCl 20, 60, 100':
     condition_b = 'NaCl20gLRPKM'
     condition_c = 'NaCl100g/LRPKM'
     labels = ['LB60 Transcript','LB20 Transcript','LB100 Transcript']
+    pcondition_a = '60gLProteinpgDW'
+    pcondition_b = '20gLProteinpgDW'
+    pcondition_c = 'NaCl100g/LProteinpgDW'
+    labels_p = ['LB60 Protein','LB20 Protein','LB100 Protein']
+
 elif vis_choice == 'Fermentation over time':
     condition_a = 'Fermentation9hRPKM'
     condition_b = 'Fermentation19hRPKM'
     condition_c = 'Fermentation30hRPKM'
-    labels = ['9hr','19hr','30hr']
+    labels = ['9hr t','19hr t','30hr t']
+    pcondition_a = 'Fermentation9hProteinpgDW'
+    pcondition_b = 'Fermentation19hProteinpgDW'
+    pcondition_c = 'Fermentation30hProteinpgDW'
+    labels_p = ['9hr p','19hr p','30hr p']
 
 if choice == 'heatmap':
     st.write(""" ### Heatmap of different Treatments""")
@@ -89,12 +98,18 @@ if choice == 'heatmap':
     logfiltered = np.log2(countData_filtered[['NaCl60gLRPKM','NaCl20gLRPKM','NaCl100g/LRPKM','Fermentation9hRPKM','Fermentation19hRPKM','Fermentation30hRPKM']])
     ylabel = countData_filtered['Name'].str[:40]
     
-    #sns.set(font_scale=0.4)
     sns_plot = sns.clustermap(logfiltered[[condition_a,condition_b,condition_c]],
                           xticklabels=labels, yticklabels=ylabel,method='ward',
                               standard_scale=1,cmap="coolwarm")
-    sns_plot.ax_heatmap.set_xticklabels(sns_plot.ax_heatmap.get_xmajorticklabels(), fontsize = 16)
+    sns_plot.ax_heatmap.set_xticklabels(sns_plot.ax_heatmap.get_xmajorticklabels(), fontsize = 10)
     st.pyplot(sns_plot)
+    
+    exp_filtered = np.exp(countData_filtered[[pcondition_a,pcondition_b,pcondition_c]])
+    sns_plot_p = sns.clustermap(exp_filtered[[pcondition_a,pcondition_b,pcondition_c]],
+                          xticklabels=labels, yticklabels=ylabel,method='ward',
+                              standard_scale=1,cmap="coolwarm")
+    sns_plot_p.ax_heatmap.set_xticklabels(sns_plot_p.ax_heatmap.get_xmajorticklabels(), fontsize = 10)
+    st.pyplot(sns_plot_p)
     #st.table(pathlist)
 
 
@@ -124,7 +139,3 @@ elif choice == 'MAP':
         base64_pdf = base64.b64encode(f.read()).decode('utf-8')
         pdf_display = F'<iframe src="data:application/pdf;base64,{base64_pdf}" width="900" height="700" type="application/pdf"></iframe>'
         st.markdown(pdf_display, unsafe_allow_html=True)
-
-
-
-
