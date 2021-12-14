@@ -65,31 +65,38 @@ if vis_choice == 'NaCl 20, 60, 100':
     condition_aa = '20gNaCl'
     condition_bb = '100gNaCl'
     condition_cc = 'High_Nitrogen'
-    labels = ['LB60 Transcript','LB20 Transcript','LB100 Transcript']
-    
+    labels = ['LB60','LB20','LB100']
     pcondition_a = '60gLProteinpgDW'
     pcondition_b = '20gLProteinpgDW'
     pcondition_c = 'NaCl100g/LProteinpgDW'
     pcondition_aa = '20gNaCl_P'
     pcondition_bb = '100gNaCl_P'
     pcondition_cc = 'High_N_P'
-    labels_p = ['LB60 Protein','LB20 Protein','LB100 Protein']
+    vscondition_a = 'LB100vs'
+    vscondition_b = 'LB20vs'
+    vscondition_c = 'HighNvs'
+    xlabels = 'LB60'
+    ylabels = 'LB20, LB100, High N'
 
 elif vis_choice == 'Fermentation over time':
     condition_a = 'Fermentation9hRPKM'
     condition_b = 'Fermentation19hRPKM'
     condition_c = 'Fermentation30hRPKM'
-    labels = ['9hr t','19hr t','30hr t']
+    labels = ['9hr','19hr','30hr']
     condition_aa = '19hr'
     condition_bb = '30hr'
     condition_cc = 'x'
     pcondition_a = 'Fermentation9hProteinpgDW'
     pcondition_b = 'Fermentation19hProteinpgDW'
     pcondition_c = 'Fermentation30hProteinpgDW'
-    labels_p = ['9hr p','19hr p','30hr p']
     pcondition_aa = '19hr_P'
     pcondition_bb = '30hr_P'
     pcondition_cc = 'x'
+    vscondition_a = '9hrvs'
+    vscondition_b = '19hrvs'
+    vscondition_c = '30hrvs'
+    xlabels = '9 hours'
+    ylabels = '19, 30 hours'
 
 
 if choice == 'heatmap':
@@ -104,21 +111,23 @@ if choice == 'heatmap':
             truth.append(False)
     countData_filtered = countData[truth]
     logfiltered = np.log2(countData_filtered[['NaCl60gLRPKM','NaCl20gLRPKM','NaCl100g/LRPKM','Fermentation9hRPKM','Fermentation19hRPKM','Fermentation30hRPKM']])
-    ylabel = countData_filtered['Name'].str[:40]
+    ylabel = countData_filtered['Name'].str[:28]
     
     st.write(""" #### Transcriptomic Data""")
     sns_plot = sns.clustermap(logfiltered[[condition_a,condition_b,condition_c]],
                           xticklabels=labels, yticklabels=ylabel,method='ward',
-                              standard_scale=1,cmap="coolwarm")
-    sns_plot.ax_heatmap.set_xticklabels(sns_plot.ax_heatmap.get_xmajorticklabels(), fontsize = 10)
+                              standard_scale=1,cmap="coolwarm",figsize=(5,9))
+    sns_plot.ax_heatmap.set_xticklabels(sns_plot.ax_heatmap.get_xmajorticklabels(), fontsize = 12)
+    sns_plot.ax_heatmap.set_yticklabels(sns_plot.ax_heatmap.get_ymajorticklabels(), fontsize = 5)
     st.pyplot(sns_plot)
     
     st.write(""" #### Proteomic Data""")
     exp_filtered = np.exp(countData_filtered[[pcondition_a,pcondition_b,pcondition_c]])
     sns_plot_p = sns.clustermap(exp_filtered[[pcondition_a,pcondition_b,pcondition_c]],
                           xticklabels=labels, yticklabels=ylabel,method='ward',
-                              standard_scale=1,cmap="coolwarm")
-    sns_plot_p.ax_heatmap.set_xticklabels(sns_plot_p.ax_heatmap.get_xmajorticklabels(), fontsize = 10)
+                              standard_scale=1,cmap="coolwarm",figsize=(5,9))
+    sns_plot_p.ax_heatmap.set_xticklabels(sns_plot_p.ax_heatmap.get_xmajorticklabels(), fontsize = 12)
+    sns_plot_p.ax_heatmap.set_yticklabels(sns_plot_p.ax_heatmap.get_ymajorticklabels(), fontsize = 5)
     st.pyplot(sns_plot_p)
     #st.table(pathlist)
 
@@ -126,20 +135,56 @@ if choice == 'heatmap':
 elif choice == 'scatterplot':
     st.write("""### Scatterplot of different Treatments""")
     
-    GO = st.sidebar.selectbox('Select GO TERM:', golist)
-    scatter_filtered = scatterData[scatterData.GONAME==GO]
+
+    col1, col2 = st.columns(2)
+    with col1:
+        GO = st.selectbox('Select GO TERM:', golist)
+    with col2:
+        dna_protein = st.radio("Omics: ",('DNA','Protein','DNA vs Protein'))
     
-    st.write("""#### Transcriptomics""")
-    scatter_filtered_d = scatter_filtered[(scatter_filtered.Treatment==condition_aa) | (scatter_filtered.Treatment==condition_bb) | (scatter_filtered.Treatment==condition_cc)]
-    scattter = sns.scatterplot(data=scatter_filtered_d,x="Control", y="NaCl20_100_3.6gLRPKM",hue="Treatment",palette= 'coolwarm')
-    figurescatter = scattter.figure
-    st.pyplot(figurescatter)
+    scatter_filtered = scatterData[scatterData.GONAME==GO]  
+    X_plot=np.linspace(0,4)
+    Y_plot=X_plot
+    fig=plt.plot(X_plot, Y_plot, linewidth=1, color='k')
+    plt.show()
     
-    st.write("""#### Proteomics""")
-    scatter_filtered_p = scatter_filtered[(scatter_filtered.Treatment==pcondition_aa) | (scatter_filtered.Treatment==pcondition_bb) | (scatter_filtered.Treatment==pcondition_cc)]
-    scattter2 = sns.scatterplot(data=scatter_filtered_p,x="Control", y="NaCl20_100_3.6gLRPKM",hue="Treatment",palette= 'coolwarm')
-    figurescatter2 = scattter2.figure
-    st.pyplot(figurescatter2)
+    if dna_protein == 'DNA':
+        plt.clf()
+        st.write("""#### Transcriptomics""")
+        scatter_filtered_d = scatter_filtered[(scatter_filtered.Treatment==condition_aa) | (scatter_filtered.Treatment==condition_bb) | (scatter_filtered.Treatment==condition_cc)]
+        scattter = sns.scatterplot(data=scatter_filtered_d,x="Control", y="Treatments",hue="Treatment",palette= 'muted')
+        plt.xlabel(xlabels)
+        plt.ylabel(ylabels)       
+        figurescatter = scattter.figure
+        X_plot=np.linspace(min(scatter_filtered_d.Control),max(scatter_filtered_d.Control))
+        Y_plot=X_plot
+        fig=plt.plot(X_plot, Y_plot, linewidth=1, color='k')
+        plt.show()
+        st.pyplot(figurescatter)
+    
+    elif dna_protein == 'Protein':
+        plt.clf()
+        st.write("""#### Proteomics""")
+        scatter_filtered_p = scatter_filtered[(scatter_filtered.Treatment==pcondition_aa) | (scatter_filtered.Treatment==pcondition_bb) | (scatter_filtered.Treatment==pcondition_cc)]
+        scattter2 = sns.scatterplot(data=scatter_filtered_p,x="Control", y="Treatments",hue="Treatment",palette= 'muted')
+        plt.xlabel(xlabels)
+        plt.ylabel(ylabels)
+        figurescatter2 = scattter2.figure
+        X_plot2=np.linspace(min(scatter_filtered_p.Control),max(scatter_filtered_p.Control))
+        Y_plot2=X_plot2
+        fig2=plt.plot(X_plot2, Y_plot2, linewidth=1, color='k')
+        plt.show()
+        st.pyplot(figurescatter2)
+    
+    elif dna_protein == "DNA vs Protein":
+        plt.clf()
+        st.write("""#### Transcriptomics vs Proteomics""")
+        scatter_filtered_v = scatter_filtered[(scatter_filtered.Treatment==vscondition_a) | (scatter_filtered.Treatment==vscondition_b) | (scatter_filtered.Treatment==vscondition_c)]
+        scattter3 = sns.scatterplot(data=scatter_filtered_v,x="Control", y="Treatments",hue="Treatment",palette= 'muted')
+        plt.xlabel("Transcript")
+        plt.ylabel("Protein")
+        figurescatter3 = scattter3.figure
+        st.pyplot(figurescatter3)
     
 
 elif choice == 'KEGG':
@@ -162,5 +207,9 @@ elif choice == 'MAP':
         st.markdown(pdf_display, unsafe_allow_html=True)
     st.write("### List of all genes in pathway chosen!")
     st.table(str)
+
+
+
+
 
 
