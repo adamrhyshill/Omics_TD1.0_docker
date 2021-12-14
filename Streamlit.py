@@ -13,7 +13,6 @@ from Bio.Graphics.KGML_vis import KGMLCanvas
 import matplotlib
 import matplotlib.pyplot as plt
 import seaborn as sns
-import pandas.util.testing as tm
 import base64
 from IPython.display import Image, HTML
 import pandas as pd
