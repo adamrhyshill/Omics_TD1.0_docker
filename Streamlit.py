@@ -140,7 +140,6 @@ elif choice == 'scatterplot':
     scattter2 = sns.scatterplot(data=scatter_filtered_p,x="Control", y="NaCl20_100_3.6gLRPKM",hue="Treatment",palette= 'coolwarm')
     figurescatter2 = scattter2.figure
     st.pyplot(figurescatter2)
-    st.pyplot(plt.plot([0, 0], [3.5, 3.5], linewidth=2))
     
 
 elif choice == 'KEGG':
