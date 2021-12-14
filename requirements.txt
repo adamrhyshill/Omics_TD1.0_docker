@@ -8,5 +8,3 @@ biopython==1.78
 pandas==1.1.4
 numpy==1.19.4
 backports.os==0.1.1
-base64
-os
