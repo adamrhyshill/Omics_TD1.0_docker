@@ -50,7 +50,7 @@ golist = list(dict.fromkeys(scatterData.GONAME))
 pathlist = list(dict.fromkeys(countData.KEGGNamesofPath))
 
 
-st.write("# Halomonas TD1.0 Proteomics")
+st.write("# Halomonas TD1.0 Omics")
 #col1, col2, col3 = st.columns(3)
 #col1.metric("GO Term", countData_filtered.iloc[1,36])
 #col2.metric("Number of Genes" , countData_filtered.shape[0])
@@ -149,6 +149,7 @@ elif choice == 'KEGG':
     st.write(to_df(kegg_find('hel', kegginput).read()))
 
 elif choice == 'MAP':
+    st.write("### List of Halo KEGG pathways")
     st.write(to_df(kegg_list('pathway', 'hel').read()))
     outdir = st.text_input("Please enter the pathway to you documents folder, in order to generate KEGG file",value="/Users/hellpark/Desktop/",help='Ex: /Users/hellpark/Desktop/')
     pathinput = st.text_input("To generate Halomonas map of genes in KEGG, please enter pathway of interest",help='type pathway like, hel00010 after the path:')
@@ -156,11 +157,12 @@ elif choice == 'MAP':
     draw_kegg_map(pathinput,outdir)
     img_filename = "%s.pdf" % pathinput
 
+    st.write("### KEGG Pathway with Halomonas TD1.0 genes highlighted")
     with open(os.path.join(outdir, img_filename),"rb") as f:
         base64_pdf = base64.b64encode(f.read()).decode('utf-8')
         pdf_display = F'<iframe src="data:application/pdf;base64,{base64_pdf}" width="900" height="700" type="application/pdf"></iframe>'
         st.markdown(pdf_display, unsafe_allow_html=True)
-    st.write("List of all genes in pathway chosen!")
+    st.write("### List of all genes in pathway chosen!")
     st.table(str)
 
 
