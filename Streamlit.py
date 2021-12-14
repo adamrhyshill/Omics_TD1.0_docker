@@ -11,7 +11,6 @@ from Bio.KEGG.REST import *
 from Bio.KEGG.KGML import KGML_parser
 from Bio.Graphics.KGML_vis import KGMLCanvas
 import matplotlib
-matplotlib.use('tkagg')
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas.util.testing as tm
