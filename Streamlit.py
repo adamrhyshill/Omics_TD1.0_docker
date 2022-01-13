@@ -50,46 +50,46 @@ if vis_choice == 'NaCl 20, 60, 100':
     condition_a = 'NaCl60gLRPKM'
     condition_b = 'NaCl20gLRPKM'
     condition_c = 'NaCl100g/LRPKM'
-     condition_aa = '20gNaCl'
-     condition_bb = '100gNaCl'
-     condition_cc = 'High_Nitrogen'
-     labels = ['LB60 Transcript','LB20 Transcript','LB100 Transcript']
+    condition_aa = '20gNaCl'
+    condition_bb = '100gNaCl'
+    condition_cc = 'High_Nitrogen'
+    labels = ['LB60 Transcript','LB20 Transcript','LB100 Transcript']
 
-     labels = ['LB60','LB20','LB100']
-     pcondition_a = '60gLProteinpgDW'
-     pcondition_b = '20gLProteinpgDW'
-     pcondition_c = 'NaCl100g/LProteinpgDW'
-     pcondition_aa = '20gNaCl_P'
-     pcondition_bb = '100gNaCl_P'
-     pcondition_cc = 'High_N_P'
-     labels_p = ['LB60 Protein','LB20 Protein','LB100 Protein']
-     vscondition_a = 'LB100vs'
-     vscondition_b = 'LB20vs'
-     vscondition_c = 'HighNvs'
-     xlabels = 'LB60'
-     ylabels = 'LB20, LB100, High N'
-
- elif vis_choice == 'Fermentation over time':
-     condition_a = 'Fermentation9hRPKM'
-     condition_b = 'Fermentation19hRPKM'
-     condition_c = 'Fermentation30hRPKM'
-     labels = ['9hr t','19hr t','30hr t']
-     labels = ['9hr','19hr','30hr']
-     condition_aa = '19hr'
-     condition_bb = '30hr'
-     condition_cc = 'x'
-     pcondition_a = 'Fermentation9hProteinpgDW'
-     pcondition_b = 'Fermentation19hProteinpgDW'
-     pcondition_c = 'Fermentation30hProteinpgDW'
-     labels_p = ['9hr p','19hr p','30hr p']
-     pcondition_aa = '19hr_P'
-     pcondition_bb = '30hr_P'
-     pcondition_cc = 'x'
-     vscondition_a = '9hrvs'
-     vscondition_b = '19hrvs'
-     vscondition_c = '30hrvs'
-     xlabels = '9 hours'
-     ylabels = '19, 30 hours'
+    labels = ['LB60','LB20','LB100']
+    pcondition_a = '60gLProteinpgDW'
+    pcondition_b = '20gLProteinpgDW'
+    pcondition_c = 'NaCl100g/LProteinpgDW'
+    pcondition_aa = '20gNaCl_P'
+    pcondition_bb = '100gNaCl_P'
+    pcondition_cc = 'High_N_P'
+    labels_p = ['LB60 Protein','LB20 Protein','LB100 Protein']
+    vscondition_a = 'LB100vs'
+    vscondition_b = 'LB20vs'
+    vscondition_c = 'HighNvs'
+    xlabels = 'LB60'
+    ylabels = 'LB20, LB100, High N'
+    
+elif vis_choice == 'Fermentation over time':
+    condition_a = 'Fermentation9hRPKM'
+    condition_b = 'Fermentation19hRPKM'
+    condition_c = 'Fermentation30hRPKM'
+    labels = ['9hr t','19hr t','30hr t']
+    labels = ['9hr','19hr','30hr']
+    condition_aa = '19hr'
+    condition_bb = '30hr'
+    condition_cc = 'x'
+    pcondition_a = 'Fermentation9hProteinpgDW'
+    pcondition_b = 'Fermentation19hProteinpgDW'
+    pcondition_c = 'Fermentation30hProteinpgDW'
+    labels_p = ['9hr p','19hr p','30hr p']
+    pcondition_aa = '19hr_P'
+    pcondition_bb = '30hr_P'
+    pcondition_cc = 'x'
+    vscondition_a = '9hrvs'
+    vscondition_b = '19hrvs'
+    vscondition_c = '30hrvs'
+    xlabels = '9 hours'
+    ylabels = '19, 30 hours'
 
 
  if choice == 'heatmap':
@@ -197,7 +197,7 @@ if vis_choice == 'NaCl 20, 60, 100':
          st.pyplot(figurescatter3)
 
 
- elif choice == 'KEGG':
+elif choice == 'KEGG':
     kegginput = st.text_input("Seach KEGG Halomonas Database", value="Porin",max_chars=200,help='Type + between the words you are searching for')
     st.write(to_df(kegg_find('hel', kegginput).read()))
 elif choice == 'MAP':
@@ -214,4 +214,4 @@ elif choice == 'MAP':
         pdf_display = F'<iframe src="data:application/pdf;base64,{base64_pdf}" width="900" height="700" type="application/pdf"></iframe>'
         st.markdown(pdf_display, unsafe_allow_html=True)
     st.write("### List of all genes in pathway chosen!")
-     st.table(str)
+    st.table(str)
