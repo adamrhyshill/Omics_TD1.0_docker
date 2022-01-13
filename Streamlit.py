@@ -35,7 +35,7 @@ def draw_kegg_map(map_id, outdir):
     pathway = KGML_parser.read(kegg_get(map_id, "kgml"))
     canvas = KGMLCanvas(pathway, import_imagemap=True)
     img_filename = "%s.pdf" % map_id
-    img_filename = 
+
     canvas.draw(os.path.join(outdir, img_filename))
 
 #import the data
