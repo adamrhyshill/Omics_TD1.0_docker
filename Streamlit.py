@@ -32,11 +32,10 @@ def head(text, lines=10):
     return text.split("\n")[:lines]
 
 def draw_kegg_map(map_id, outdir):
-    """Render a local PDF of a KEGG map with the passed map ID."""
-    # Get the background image first
     pathway = KGML_parser.read(kegg_get(map_id, "kgml"))
     canvas = KGMLCanvas(pathway, import_imagemap=True)
     img_filename = "%s.pdf" % map_id
+    img_filename = 
     canvas.draw(os.path.join(outdir, img_filename))
 
 #import the data
@@ -194,11 +193,15 @@ elif choice == 'KEGG':
 elif choice == 'MAP':
     st.write("### List of Halo KEGG pathways")
     st.write(to_df(kegg_list('pathway', 'hel').read()))
+    
     outdir = st.text_input("Please enter the pathway to you documents folder, in order to generate KEGG file",value="/Users/hellpark/Desktop/",help='Ex: /Users/hellpark/Desktop/')
     pathinput = st.text_input("To generate Halomonas map of genes in KEGG, please enter pathway of interest",help='type pathway like, hel00010 after the path:')
     str = to_df2(kegg_get(pathinput).read())
-    draw_kegg_map(pathinput,outdir)
+    outdir = "/Users/hellpark/Desktop/"
     img_filename = "%s.pdf" % pathinput
+    st.write(img_filename, pathinput, outdir)
+    draw_kegg_map(pathinput,outdir)
+    
 
     st.write("### KEGG Pathway with Halomonas TD1.0 genes highlighted")
     with open(os.path.join(outdir, img_filename),"rb") as f:
@@ -207,16 +210,6 @@ elif choice == 'MAP':
         st.markdown(pdf_display, unsafe_allow_html=True)
     st.write("### List of all genes in pathway chosen!")
     st.table(str)
-
-elif choice == 'Model':
-    media_choice = st.radio("Media: ",('Full','Minimal'))
-    if media_choice == 'Minimal':
-        set_yeast_extraction(model, ub=0,lb=0)
-    elif media_choice == 'Full':
-        set_yeast_extraction(model, ub=1000,lb=-1000)
-    
-    
-
 
 
 
