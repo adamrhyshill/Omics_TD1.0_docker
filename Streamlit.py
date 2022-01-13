@@ -33,26 +33,9 @@ def PDF(filename):
 def head(text, lines=10):
     return text.split("\n")[:lines]
 
-def draw_kegg_map(map_id, outdir, df):
-    """Render a local PDF of a KEGG map with the passed map ID."""
-    # Get the background image first
-    pathway = KGML_parser.read(kegg_get(map_id, "kgml"))
-    df = df[df.val > 0]
-    bin_labels_8 = ['#fbfb04', '#ffe100', '#ffc600', '#ffab00', '#ff8d00', '#ff6e00', '#ff4900', '#fc020c']
-    df['eight_bins'] = pd.qcut(np.log2(df.val), q=8, labels=bin_labels_8)
-    df = df[df['eight_bins'].str.contains('#')]
+def draw_kegg_map(map_id, outdir,df):
 
-    for element in pathway.orthologs:
-        for graphic in element.graphics:
-            graphic.fgcolor = '#ffffff'
-            graphic.bgcolor = '#ffffff'
-    for element in pathway.orthologs:
-        for graphic in element.graphics:
-            for ko in df.KEGGSYMBOL:
-                if ko in element.name:
-                    graphic.fgcolor = df.loc[df.KEGGSYMBOL == ko,'eight_bins'].values[0]
-                    graphic.bgcolor = df.loc[df.KEGGSYMBOL == ko,'eight_bins'].values[0]   
-    
+    pathway = KGML_parser.read(kegg_get(map_id, "kgml"))
     canvas = KGMLCanvas(pathway, import_imagemap=True)
     img_filename = "%s.pdf" % map_id
     canvas.draw(os.path.join(outdir, img_filename))
