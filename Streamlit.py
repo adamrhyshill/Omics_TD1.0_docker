@@ -194,24 +194,22 @@ elif choice == 'MAP':
     st.write("### List of Halo KEGG pathways")
     st.write(to_df(kegg_list('pathway', 'hel').read()))
     
-    outdir = st.text_input("Please enter the pathway to you documents folder, in order to generate KEGG file",value="/Users/hellpark/Desktop/",help='Ex: /Users/hellpark/Desktop/')
-    pathinput = st.text_input("To generate Halomonas map of genes in KEGG, please enter pathway of interest",help='type pathway like, hel00010 after the path:')
-    str = to_df2(kegg_get(pathinput).read())
+    #outdir = st.text_input("Please enter the pathway to you documents folder, in order to generate KEGG file",value="/Users/hellpark/Desktop/",help='Ex: /Users/hellpark/Desktop/')
     outdir = "/Users/hellpark/Desktop/"
+    pathinput = st.text_input("To generate Halomonas map of genes in KEGG, please enter pathway of interest",value='hel00010',help='type pathway like, hel00010 after the path:')
+    #str = to_df2(kegg_get(pathinput).read())
     img_filename = "%s.pdf" % pathinput
-    st.write(img_filename, pathinput, outdir)
+    #st.write(img_filename, pathinput, outdir)
     draw_kegg_map(pathinput,outdir)
     
 
     st.write("### KEGG Pathway with Halomonas TD1.0 genes highlighted")
     with open(os.path.join(outdir, img_filename),"rb") as f:
-        base64_pdf = base64.b64encode(f.read()).decode('utf-8')
-        pdf_display = F'<iframe src="data:application/pdf;base64,{base64_pdf}" width="900" height="700" type="application/pdf"></iframe>'
-        st.markdown(pdf_display, unsafe_allow_html=True)
+         base64_pdf = base64.b64encode(f.read()).decode('utf-8')
+         pdf_display = F'<iframe src="data:application/pdf;base64,{base64_pdf}" width="900" height="700" type="application/pdf"></iframe>'
+         st.markdown(pdf_display, unsafe_allow_html=True)
     st.write("### List of all genes in pathway chosen!")
-    st.table(str)
-
-
+    #st.table(str)
 
 
 
