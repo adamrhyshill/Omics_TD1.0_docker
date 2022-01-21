@@ -31,13 +31,6 @@ def PDF(filename):
 def head(text, lines=10):
     return text.split("\n")[:lines]
 
-def draw_kegg_map(map_id, outdir):
-    pathway = KGML_parser.read(kegg_get(map_id, "kgml"))
-    canvas = KGMLCanvas(pathway, import_imagemap=True)
-    img_filename = "%s.pdf" % map_id
-
-    canvas.draw(os.path.join(outdir, img_filename))
-
 #import the data
 matplotlib.pyplot.switch_backend('Agg') 
 read_and_cache_csv = st.cache(pd.read_csv)
@@ -194,17 +187,20 @@ elif choice == 'MAP':
     st.write("### List of Halo KEGG pathways")
     st.write(to_df(kegg_list('pathway', 'hel').read()))
     
-    #outdir = st.text_input("Please enter the pathway to you documents folder, in order to generate KEGG file",value="/Users/hellpark/Desktop/",help='Ex: /Users/hellpark/Desktop/')
-    outdir = "../outputdata/"
+    #outdir = "../outputdata/"
     pathinput = st.text_input("To generate Halomonas map of genes in KEGG, please enter pathway of interest",value='hel00010',help='type pathway like, hel00010 after the path:')
-    #str = to_df2(kegg_get(pathinput).read())
     img_filename = "%s.pdf" % pathinput
-    #st.write(img_filename, pathinput, outdir)
-    draw_kegg_map(pathinput,outdir)
+    st.write(img_filename, pathinput)
+    
+    pathway = KGML_parser.read(kegg_get(pathinput, "kgml"))
+    canvas = KGMLCanvas(pathway, import_imagemap=True)
+    canvas.draw(img_filename)
+    
+    #draw_kegg_map(pathinput)
     
 
     st.write("### KEGG Pathway with Halomonas TD1.0 genes highlighted")
-    with open(os.path.join(outdir, img_filename),"rb") as f:
+    with open(os.path.join(img_filename),"rb") as f:
          base64_pdf = base64.b64encode(f.read()).decode('utf-8')
          pdf_display = F'<iframe src="data:application/pdf;base64,{base64_pdf}" width="900" height="700" type="application/pdf"></iframe>'
          st.markdown(pdf_display, unsafe_allow_html=True)
