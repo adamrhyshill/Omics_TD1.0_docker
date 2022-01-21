@@ -195,7 +195,7 @@ elif choice == 'MAP':
     pathway = KGML_parser.read(kegg_get(pathinput, "kgml"))
     canvas = KGMLCanvas(pathway, import_imagemap=True)
     
-    outdir = '../omics_td1.0/outputdata/
+    outdir = '../omics_td1.0/outputdata/'
     img_filename = 'ko00020.pdf'
     canvas.draw(os.path.join(outdir, img_filename))
     
