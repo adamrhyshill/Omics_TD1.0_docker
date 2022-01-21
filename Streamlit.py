@@ -195,13 +195,12 @@ elif choice == 'MAP':
     pathway = KGML_parser.read(kegg_get(pathinput, "kgml"))
     canvas = KGMLCanvas(pathway, import_imagemap=True)
     
-    canvas.draw(os.path('../omics_td1.0/outputdata/ko00020.pdf'))
+    canvas.draw('../omics_td1.0/outputdata/ko00020.pdf')
     
     #draw_kegg_map(pathinput)
-    
 
     st.write("### KEGG Pathway with Halomonas TD1.0 genes highlighted")
-    with open(os.path('../omics_td1.0/outputdata/ko00020.pdf'),"rb") as f:
+    with open('../omics_td1.0/outputdata/ko00020.pdf',"rb") as f:
          base64_pdf = base64.b64encode(f.read()).decode('utf-8')
          pdf_display = F'<iframe src="data:application/pdf;base64,{base64_pdf}" width="900" height="700" type="application/pdf"></iframe>'
          st.markdown(pdf_display, unsafe_allow_html=True)
