@@ -195,7 +195,7 @@ elif choice == 'MAP':
     st.write(to_df(kegg_list('pathway', 'hel').read()))
     
     #outdir = st.text_input("Please enter the pathway to you documents folder, in order to generate KEGG file",value="/Users/hellpark/Desktop/",help='Ex: /Users/hellpark/Desktop/')
-    outdir = "/Users/hellpark/Desktop/"
+    outdir = "../outputdata/"
     pathinput = st.text_input("To generate Halomonas map of genes in KEGG, please enter pathway of interest",value='hel00010',help='type pathway like, hel00010 after the path:')
     #str = to_df2(kegg_get(pathinput).read())
     img_filename = "%s.pdf" % pathinput
