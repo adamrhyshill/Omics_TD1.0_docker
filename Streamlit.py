@@ -200,7 +200,7 @@ elif choice == 'MAP':
     #draw_kegg_map(pathinput)
 
     st.write("### KEGG Pathway with Halomonas TD1.0 genes highlighted")
-    with open('../outputdata/ko00020.pdf',"rb") as f:
+    with open('/outputdata/ko00020.pdf',"rb") as f:
          base64_pdf = base64.b64encode(f.read()).decode('utf-8')
          pdf_display = F'<embed src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf">'
 
