@@ -187,20 +187,20 @@ elif choice == 'MAP':
     st.write("### List of Halo KEGG pathways")
     st.write(to_df(kegg_list('pathway', 'hel').read()))
     
-    #outdir = "../outputdata/"
+    outdir = '/outputdata/'
     pathinput = st.text_input("To generate Halomonas map of genes in KEGG, please enter pathway of interest",value='hel00010',help='type pathway like, hel00010 after the path:')
     img_filename = "%s.pdf" % pathinput
     st.write(img_filename, pathinput)
     
     pathway = KGML_parser.read(kegg_get(pathinput, "kgml"))
     canvas = KGMLCanvas(pathway, import_imagemap=True)
-    canvas.draw(img_filename)
+    canvas.draw(os.path.join('/outputdata/', img_filename))
     
     #draw_kegg_map(pathinput)
     
 
     st.write("### KEGG Pathway with Halomonas TD1.0 genes highlighted")
-    with open(os.path.join(img_filename),"rb") as f:
+    with open(os.path.join('/outputdata/',img_filename),"rb") as f:
          base64_pdf = base64.b64encode(f.read()).decode('utf-8')
          pdf_display = F'<iframe src="data:application/pdf;base64,{base64_pdf}" width="900" height="700" type="application/pdf"></iframe>'
          st.markdown(pdf_display, unsafe_allow_html=True)
