@@ -200,7 +200,14 @@ elif choice == 'MAP':
 
     st.write("### KEGG Pathway with Halomonas TD1.0 genes highlighted")
     
-    <a href="https://github.com/helloftroy/Omics_TD1.0/blob/main/ko00020.pdf" target="_blank">PDF.</a>
+
+    folder = './outputdata'
+    no_files = len(os.listdir(folder))
+    file = 'ko00020.pdf'
+    file_path = os.path.join(folder,str(file))
+    st.write('file_path')
+    image_1 = os.path.join(file_path,os.listdir(file_path)[0])
+    st.write(image_1)
     
   #  with open('https://github.com/helloftroy/Omics_TD1.0/blob/main/ko00020.pdf',"rb") as f:
    #     base64_pdf = base64.b64encode(f.read()).decode('utf-8')
