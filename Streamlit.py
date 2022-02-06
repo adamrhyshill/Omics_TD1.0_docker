@@ -203,21 +203,17 @@ elif choice == 'MAP':
 
     folder = './outputdata'
     no_files = len(os.listdir(folder))
-    file = 'ko00020.pdf'
-    file_path = os.path.join(folder,str(file))
-    st.write(file_path)
-    st.write(os.path.join(file_path,os.listdir(file_path)[0]))
-    image_1 = os.path.join(file_path,os.listdir(file_path)[0])
-    st.write(image_1)
+    file = ''
+   # file_path = os.path.join(folder,str(file))
+   # st.write(file_path)
+   # st.write(os.path.join(file_path,os.listdir(file_path)[0]))
+   # image_1 = os.path.join(file_path,os.listdir(file_path)[0])
+   # st.write(image_1)
     
-  #  with open('https://github.com/helloftroy/Omics_TD1.0/blob/main/ko00020.pdf',"rb") as f:
-   #     base64_pdf = base64.b64encode(f.read()).decode('utf-8')
-    #    pdf_display = f'<embed src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf">' 
-     #   st.markdown(pdf_display, unsafe_allow_html=True)
-        
-      #   base64_pdf = base64.b64encode(f.read()).decode('utf-8')         
-       #  pdf_display = F'<iframe src="data:application/pdf;base64,{base64_pdf}" width="900" height="700" type="application/pdf"></iframe>'
-        # st.markdown(pdf_display, unsafe_allow_html=True)
+    with open('./outputdata/ko00020.pdf',"rb") as f:
+        base64_pdf = base64.b64encode(f.read()).decode('utf-8')         
+        pdf_display = F'<iframe src="data:application/pdf;base64,{base64_pdf}" width="900" height="700" type="application/pdf"></iframe>'
+        st.markdown(pdf_display, unsafe_allow_html=True)
     st.write("### List of all genes in pathway chosen!")
     #st.table(str)
 
