@@ -194,7 +194,7 @@ elif choice == 'MAP':
 
     
     #'../omics_td1.0/outputdata/'
-    canvas.draw(os.path.join(outdir, img_filename))
+    #canvas.draw(os.path.join(outdir, img_filename))
     
     #draw_kegg_map(pathinput)
 
