@@ -41,7 +41,7 @@ vis_choice = st.sidebar.radio("Selection ",('NaCl 20, 60, 100','Fermentation ove
 
 
 
-elif choice == 'MAP':
+if choice == 'MAP':
     st.write("### List of Halo KEGG pathways")
 
     pathinput = 'hel00010'
