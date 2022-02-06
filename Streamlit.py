@@ -205,7 +205,8 @@ elif choice == 'MAP':
     no_files = len(os.listdir(folder))
     file = 'ko00020.pdf'
     file_path = os.path.join(folder,str(file))
-    st.write('file_path')
+    st.write(file_path)
+    st.write(os.path.join(file_path,os.listdir(file_path)[0]))
     image_1 = os.path.join(file_path,os.listdir(file_path)[0])
     st.write(image_1)
     
