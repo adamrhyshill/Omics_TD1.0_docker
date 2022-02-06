@@ -177,27 +177,21 @@ elif choice == 'scatterplot':
         plt.ylabel("Protein")
         figurescatter3 = scattter3.figure
         st.pyplot(figurescatter3)
-    
-
-elif choice == 'KEGG':
-    kegginput = st.text_input("Seach KEGG Halomonas Database", value="Porin",max_chars=200,help='Type + between the words you are searching for')
-    st.write(to_df(kegg_find('hel', kegginput).read()))
+   
 
 elif choice == 'MAP':
     st.write("### List of Halo KEGG pathways")
-    st.write(to_df(kegg_list('pathway', 'hel').read()))
-    
-    
-    pathinput = st.text_input("To generate Halomonas map of genes in KEGG, please enter pathway of interest",value='hel00010',help='type pathway like, hel00010 after the path:')
+
+    pathinput = 'hel00010'
     img_filename = "ko00020.pdf"
-    st.write(img_filename, pathinput)
+    #st.write(img_filename, pathinput)
     
     pathway = KGML_parser.read(kegg_get(pathinput, "kgml"))
     canvas = KGMLCanvas(pathway, import_imagemap=True)
     
     outdir = os.path.split(os.getcwd())[0]
+    st.write(outdir)
     #'../omics_td1.0/outputdata/'
-    img_filename = 'ko00020.pdf'
     canvas.draw(os.path.join(outdir, img_filename))
     
     #draw_kegg_map(pathinput)
