@@ -200,10 +200,12 @@ elif choice == 'MAP':
 
     st.write("### KEGG Pathway with Halomonas TD1.0 genes highlighted")
     
-    with open('https://github.com/helloftroy/Omics_TD1.0/blob/main/ko00020.pdf',"rb") as f:
-        base64_pdf = base64.b64encode(f.read()).decode('utf-8')
-        pdf_display = f'<embed src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf">' 
-        st.markdown(pdf_display, unsafe_allow_html=True)
+    <a href="https://github.com/helloftroy/Omics_TD1.0/blob/main/ko00020.pdf" target="_blank">PDF.</a>
+    
+  #  with open('https://github.com/helloftroy/Omics_TD1.0/blob/main/ko00020.pdf',"rb") as f:
+   #     base64_pdf = base64.b64encode(f.read()).decode('utf-8')
+    #    pdf_display = f'<embed src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf">' 
+     #   st.markdown(pdf_display, unsafe_allow_html=True)
         
       #   base64_pdf = base64.b64encode(f.read()).decode('utf-8')         
        #  pdf_display = F'<iframe src="data:application/pdf;base64,{base64_pdf}" width="900" height="700" type="application/pdf"></iframe>'
