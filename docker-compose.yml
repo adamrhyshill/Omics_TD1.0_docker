@@ -1,0 +1,13 @@
+version: "3"
+services:
+
+  omics_app:
+    build:
+        context: .
+        dockerfile: Dockerfile
+    ports:
+      - "8043:8043"
+    volumes:
+      - ./database:/Omics_TD1.0_docker/
+    command: python3 ./index.py
+
