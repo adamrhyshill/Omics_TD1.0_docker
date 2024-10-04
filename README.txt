@@ -6,6 +6,10 @@ sudo docker build .
 
 Check if it's running and make a note of IMAGE_ID:
 sudo docker ps
+
+Find Image_ID:
+docker image ls
+
 Add flag to show even stopped processes:
 sudo docker ps -a
 
