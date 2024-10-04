@@ -6,4 +6,4 @@ COPY ./requirements.txt /requirements.txt
 RUN pip install -r requirements.txt --ignore-installed ruamel.yaml
 RUN git clone https://github.com/adamrhyshill/Omics_TD1.0_docker.git /Omics
 WORKDIR /Omics
-CMD ["python3", "index.py"]
+CMD ["gunicorn", "-b :8043","index:server"]
