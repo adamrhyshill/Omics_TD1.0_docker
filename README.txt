@@ -1,25 +1,20 @@
-Build using docker only - no need for docker-compose.
-Navigate to dir containing docker file.
+Navigate to folder containing Dockerfile
 
 Build docker:
 sudo docker build .
 
-Check if it's running and make a note of IMAGE_ID:
+Run docker with ports 8043 published:
+sudo docker run --name=omics --rm --detach -p 8043:8043 6d4e8127ea77
+
+## where "6d4e8127ea77" is the image number. Find with <sudo docker image ls>
+
+Check if it's running:
 sudo docker ps
 
-Find Image_ID:
-docker image ls
-
-Add flag to show even stopped processes:
-sudo docker ps -a
-
-Run docker:
-sudo docker run --name=omics --rm --detach IMAGE_ID
-
-Clean up all containers / images:
+Clear space:
 sudo docker system prune -f -a
 
-See all images and containers and disk usage:
-sudo docker system df
+Stop docker:
+sudo docker stop c0d70d53eeba
 
-System defaults to running on port 8043 on local host (127.0.0.1)
+## where "c0d70d53eeba" is the container ID. Find with <sudo docker ps>
